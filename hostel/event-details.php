@@ -3,6 +3,7 @@
     include('includes/config.php');
     include('includes/checklogin.php');
     check_login();
+    //TODO : event name and the user name for database
 ?>
 
 <!doctype html>
@@ -20,6 +21,12 @@
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/dataTables.bootstrap.min.css">
     <link rel="stylesheet" href="css/style.css">
+    <style>
+        .enroll-btn.enrolled {
+            background-color: red;
+            color:white;
+        }
+    </style>
 </head>
 
 <body>
@@ -43,6 +50,7 @@
                                             <th>Event Name (Short)</th>
                                             <th>Event Name (Full)</th>
                                             <th>Posting Date</th>
+                                            <th>Action</th> <!-- Add a new column for action -->
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -55,11 +63,15 @@
                                         while ($row = $res->fetch_object()) {
                                             ?>
                                             <tr>
-                                            <td><?php echo $cnt;?></td>
+                                                <td><?php echo $cnt;?></td>
                                                 <td><?php echo $row->course_code;?></td>
                                                 <td><?php echo $row->course_sn;?></td>
                                                 <td><?php echo $row->course_fn;?></td>
                                                 <td><?php echo $row->posting_date;?></td>
+                                                <td>
+                                                   
+                                                    <a class="btn btn-primary enroll-btn" data-course-id="<?php echo $row->course_id; ?>" onclick="enrollCourse(this) ">Enroll</a>
+                                                </td> 
                                             </tr>
                                             <?php
                                             $cnt = $cnt + 1;
@@ -80,7 +92,29 @@
     <script src="js/jquery.dataTables.min.js"></script>
     <script src="js/dataTables.bootstrap.min.js"></script>
     <script src="js/main.js"></script>
+    <script>
+       function enrollCourse(button) {
+    if (button.classList.contains('enrolled')) {
+        unenrollCourse(button);
+    } else {
+        if (confirm('Are you sure you want to enroll in this event?')) {
+            // Change button color and text
+            button.classList.remove('btn-primary');
+            button.classList.add('enrolled');
+            button.innerText = 'Unenroll';
+        }
+    }
+}
 
+function unenrollCourse(button) {
+    if (confirm('Are you sure you want to unenroll from this course?')) {
+        // Change button color and text
+        button.classList.remove('enrolled');
+        button.classList.add('btn-primary');
+        button.innerText = 'Enroll';
+    }
+}
+    </script>
 </body>
 
 </html>
