@@ -14,7 +14,7 @@ $query="insert into  courses (course_code,course_sn,course_fn) values(?,?,?)";
 $stmt = $mysqli->prepare($query);
 $rc=$stmt->bind_param('sss',$coursecode,$coursesn,$coursefn);
 $stmt->execute();
-echo"<script>alert('Course has been added successfully');</script>";
+echo"<script>alert('Event has been added successfully');</script>";
 }
 
 ?>
@@ -27,7 +27,7 @@ echo"<script>alert('Course has been added successfully');</script>";
 	<meta name="description" content="">
 	<meta name="author" content="">
 	<meta name="theme-color" content="#3e454c">
-	<title>Add Courses</title>
+	<title>Add Events</title>
 	<link rel="stylesheet" href="css/font-awesome.min.css">
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/dataTables.bootstrap.min.css">>
@@ -49,30 +49,30 @@ echo"<script>alert('Course has been added successfully');</script>";
 				<div class="row">
 					<div class="col-md-12">
 					
-						<h2 class="page-title">Add Courses </h2>
+						<h2 class="page-title">Add Events </h2>
 	
 						<div class="row">
 							<div class="col-md-12">
 								<div class="panel panel-default">
-									<div class="panel-heading">Add courses</div>
+									<div class="panel-heading">Add Events</div>
 									<div class="panel-body">
 										<form method="post" class="form-horizontal">
 											
 											<div class="hr-dashed"></div>
 											<div class="form-group">
-												<label class="col-sm-2 control-label">Course Code </label>
+												<label class="col-sm-2 control-label">Event Code </label>
 												<div class="col-sm-8">
 													<input type="text" value="" name="cc"  class="form-control"> </div>
 											</div>
 											<div class="form-group">
-												<label class="col-sm-2 control-label">Course Name (Short)</label>
+												<label class="col-sm-2 control-label">Event Name (Short)</label>
 												<div class="col-sm-8">
 	<input type="text" class="form-control" name="cns" id="cns" value="" required="required">
 						 
 												</div>
 											</div>
 <div class="form-group">
-									<label class="col-sm-2 control-label">Course Name(Full)</label>
+			<label class="col-sm-2 control-label">Description</label>
 									<div class="col-sm-8">
 									<input type="text" class="form-control" name="cnf" value="" >
 												</div>
@@ -82,7 +82,7 @@ echo"<script>alert('Course has been added successfully');</script>";
 
 												<div class="col-sm-8 col-sm-offset-2">
 													
-													<input class="btn btn-primary" type="submit" name="submit" value="Add course">
+													<input class="btn btn-primary" type="submit" name="submit" value="Add Event">
 												</div>
 											</div>
 
