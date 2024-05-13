@@ -23,7 +23,7 @@
     <link rel="stylesheet" href="css/style.css">
     <style>
         .enroll-btn.enrolled {
-            background-color: red;
+            background-color: green;
             color:white;
         }
     </style>
