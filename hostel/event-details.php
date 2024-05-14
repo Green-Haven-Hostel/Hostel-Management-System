@@ -1,38 +1,68 @@
 <?php
-    session_start();
-    include('includes/config.php');
-    include('includes/checklogin.php');
-    check_login();
-    //TODO : event name and the user name for database
-?>
-<?php
+session_start();
+include('includes/config.php');
+include('includes/checklogin.php');
+check_login();
+
+// Enable error reporting
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+$hostname = "localhost";
+$username = "root";
+$password = "";
+$database = "hostel";
+
+$mysqli = new mysqli($hostname, $username, $password, $database);
+if ($mysqli->connect_error) {
+    die("Connection failed: " . $mysqli->connect_error);
+}
+
 $aid = $_SESSION['id'];
 
-// Query to fetch user details and event names
+// Query to fetch user details
 $ret_user = "SELECT firstName, lastName FROM userregistration WHERE id=?";
 $stmt_user = $mysqli->prepare($ret_user);
-$stmt_user->bind_param('i', $aid);
-$stmt_user->execute();
-$res_user = $stmt_user->get_result();
-$user = $res_user->fetch_object();
-$firstName = $user->firstName;
-$lastName = $user->lastName;
+if ($stmt_user) {
+    $stmt_user->bind_param('i', $aid);
+    $stmt_user->execute();
+    $res_user = $stmt_user->get_result();
+    $user = $res_user->fetch_object();
+    $firstName = $user->firstName;
+    $lastName = $user->lastName;
+    $userName = $firstName . ' ' . $lastName;
+    $stmt_user->close();
+} else {
+    die("Error preparing statement for user details: " . $mysqli->error);
+}
 
-$ret_event = "SELECT course_sn FROM courses";
-$stmt_event = $mysqli->prepare($ret_event);
-$stmt_event->execute();
-$res_event = $stmt_event->get_result();
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $eventName = $_POST['eventName'];
+    $action = $_POST['action'];
 
-// Display the user's name and event names
-while ($event = $res_event->fetch_object()) {
-    $eventName = $event->course_sn;
-    echo "<h1>Event: $eventName 
-    User: $firstName $lastName</h1>";
+    if ($action == 'enroll') {
+        $query = "INSERT INTO enrollments (username, events) VALUES (?, ?)";
+    } else if ($action == 'unenroll') {
+        $query = "DELETE FROM enrollments WHERE username = ? AND events = ?";
+    }
+
+    $stmt = $mysqli->prepare($query);
+    if ($stmt) {
+        $stmt->bind_param('ss', $userName, $eventName);
+        if ($stmt->execute()) {
+            echo json_encode(['status' => 'success', 'message' => ucfirst($action) . ' successful']);
+        } else {
+            echo json_encode(['status' => 'error', 'message' => ucfirst($action) . ' failed: ' . $stmt->error]);
+        }
+        $stmt->close();
+    } else {
+        echo json_encode(['status' => 'error', 'message' => 'Error preparing statement: ' . $mysqli->error]);
+    }
+    exit;
 }
 ?>
 <!doctype html>
 <html lang="en" class="no-js">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -48,16 +78,14 @@ while ($event = $res_event->fetch_object()) {
     <style>
         .enroll-btn.enrolled {
             background-color: red;
-            color:white;
+            color: white;
         }
     </style>
 </head>
-
 <body>
-    <?php include('includes/header.php');?>
-
+    <?php include('includes/header.php'); ?>
     <div class="ts-main-content">
-        <?php include('includes/sidebar.php');?>
+        <?php include('includes/sidebar.php'); ?>
         <div class="content-wrapper">
             <div class="container-fluid">
                 <div class="row">
@@ -74,12 +102,12 @@ while ($event = $res_event->fetch_object()) {
                                             <th>Event Name (Short)</th>
                                             <th>Event Name (Full)</th>
                                             <th>Posting Date</th>
-                                            <th>Action</th> <!-- Add a new column for action -->
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <?php  
-                                       $ret = "SELECT * FROM courses";
+                                        $ret = "SELECT * FROM courses";
                                         $stmt = $mysqli->prepare($ret);
                                         $stmt->execute();
                                         $res = $stmt->get_result();
@@ -87,15 +115,14 @@ while ($event = $res_event->fetch_object()) {
                                         while ($row = $res->fetch_object()) {
                                             ?>
                                             <tr>
-                                                <td><?php echo $cnt;?></td>
-                                                <td><?php echo $row->course_code;?></td>
-                                                <td><?php echo $row->course_sn;?></td>
-                                                <td><?php echo $row->course_fn;?></td>
-                                                <td><?php echo $row->posting_date;?></td>
+                                                <td><?php echo $cnt; ?></td>
+                                                <td><?php echo $row->course_code; ?></td>
+                                                <td><?php echo $row->course_sn; ?></td>
+                                                <td><?php echo $row->course_fn; ?></td>
+                                                <td><?php echo $row->posting_date; ?></td>
                                                 <td>
-                                                   
-                                                    <a class="btn btn-primary enroll-btn" data-course-id="<?php echo $row->course_id; ?>" onclick="enrollCourse(this) ">Enroll</a>
-                                                </td> 
+                                                    <a class="btn btn-primary enroll-btn" data-course-id="<?php echo $row->course_id; ?>" data-event-name="<?php echo $row->course_sn; ?>" onclick="toggleEnrollment(this)">Enroll</a>
+                                                </td>
                                             </tr>
                                             <?php
                                             $cnt = $cnt + 1;
@@ -117,28 +144,41 @@ while ($event = $res_event->fetch_object()) {
     <script src="js/dataTables.bootstrap.min.js"></script>
     <script src="js/main.js"></script>
     <script>
-       function enrollCourse(button) {
-    if (button.classList.contains('enrolled')) {
-        unenrollCourse(button);
-    } else {
-        if (confirm('Are you sure you want to enroll in this event?')) {
-            // Change button color and text
-            button.classList.remove('btn-primary');
-            button.classList.add('enrolled');
-            button.innerText = 'Unenroll';
+    function toggleEnrollment(button) {
+        var action = button.classList.contains('enrolled') ? 'unenroll' : 'enroll';
+        var eventName = button.getAttribute('data-event-name');
+
+        if (confirm('Are you sure you want to ' + action + ' in this event?')) {
+            $.ajax({
+                url: 'http://localhost/test/hostel/event-details.php', 
+                type: 'POST',
+                data: {
+                    eventName: eventName,
+                    action: action
+                },
+                success: function(response) {
+                    var result = JSON.parse(response);
+                    if (result.status === 'success') {
+                        if (action === 'enroll') {
+                            button.classList.remove('btn-primary');
+                            button.classList.add('enrolled');
+                            button.innerText = 'Unenroll';
+                        } else {
+                            button.classList.remove('enrolled');
+                            button.classList.add('btn-primary');
+                            button.innerText = 'Enroll';
+                        }
+                        alert(result.message);
+                    } else {
+                        alert(result.message);
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error('AJAX Error:', status, error);
+                }
+            });
         }
     }
-}
-
-function unenrollCourse(button) {
-    if (confirm('Are you sure you want to unenroll from this course?')) {
-        // Change button color and text
-        button.classList.remove('enrolled');
-        button.classList.add('btn-primary');
-        button.innerText = 'Enroll';
-    }
-}
     </script>
 </body>
-
 </html>

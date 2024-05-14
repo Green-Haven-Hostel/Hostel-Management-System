@@ -68,7 +68,6 @@ echo"<script>alert('Event has been added successfully');</script>";
 												<label class="col-sm-2 control-label">Event Name (Short)</label>
 												<div class="col-sm-8">
 	<input type="text" class="form-control" name="cns" id="cns" value="" required="required">
-						 
 												</div>
 											</div>
 <div class="form-group">
