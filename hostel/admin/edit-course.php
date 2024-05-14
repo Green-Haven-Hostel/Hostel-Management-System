@@ -14,7 +14,7 @@ $query="update courses set course_code=?,course_sn=?,course_fn=? where id=?";
 $stmt = $mysqli->prepare($query);
 $rc=$stmt->bind_param('sssi',$coursecode,$coursesn,$coursefn,$id);
 $stmt->execute();
-echo"<script>alert('Course has been Updated successfully');</script>";
+echo"<script>alert('Event has been Updated successfully');</script>";
 }
 
 ?>
@@ -27,7 +27,7 @@ echo"<script>alert('Course has been Updated successfully');</script>";
 	<meta name="description" content="">
 	<meta name="author" content="">
 	<meta name="theme-color" content="#3e454c">
-	<title>Edit Course</title>
+	<title>Edit Event</title>
 	<link rel="stylesheet" href="css/font-awesome.min.css">
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/dataTables.bootstrap.min.css">>
@@ -49,7 +49,7 @@ echo"<script>alert('Course has been Updated successfully');</script>";
 				<div class="row">
 					<div class="col-md-12">
 					
-						<h2 class="page-title">Edit Course </h2>
+						<h2 class="page-title">Edit Event </h2>
 	
 						<div class="row">
 							<div class="col-md-12">
@@ -70,18 +70,18 @@ echo"<script>alert('Course has been Updated successfully');</script>";
 	  	?>
 						<div class="hr-dashed"></div>
 						<div class="form-group">
-						<label class="col-sm-2 control-label">Course Code </label>
+						<label class="col-sm-2 control-label">Event Code </label>
 					<div class="col-sm-8">
 					<input type="text"  name="cc" value="<?php echo $row->course_code;?>"  class="form-control"> </div>
 					</div>
 				 <div class="form-group">
-				<label class="col-sm-2 control-label">Course Name (Short)</label>
+				<label class="col-sm-2 control-label">Event Name (Short)</label>
 		<div class="col-sm-8">
 	<input type="text" class="form-control" name="cns" id="cns" value="<?php echo $row->course_sn;?>" required="required">
 						 </div>
 						</div>
 <div class="form-group">
-									<label class="col-sm-2 control-label">Course Name(Full)</label>
+									<label class="col-sm-2 control-label">Event Name(Full)</label>
 									<div class="col-sm-8">
 									<input type="text" class="form-control" name="cnf" value="<?php echo $row->course_fn;?>" >
 												</div>
@@ -91,7 +91,7 @@ echo"<script>alert('Course has been Updated successfully');</script>";
 <?php } ?>
 												<div class="col-sm-8 col-sm-offset-2">
 													
-													<input class="btn btn-primary" type="submit" name="submit" value="Update Course">
+													<input class="btn btn-primary" type="submit" name="submit" value="Update Event">
 												</div>
 											</div>
 

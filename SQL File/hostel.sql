@@ -48,7 +48,6 @@ INSERT INTO `admin` (`id`, `username`, `email`, `password`, `reg_date`, `updatio
 --
 -- Table structure for table `adminlog`
 --
-
 CREATE TABLE `adminlog` (
   `id` int(11) NOT NULL,
   `adminid` int(11) NOT NULL,
@@ -85,7 +84,6 @@ INSERT INTO `courses` (`id`, `course_code`, `course_sn`, `course_fn`, `posting_d
 
 -- --------------------------------------------------------
 
---
 -- Table structure for table `registration`
 --
 

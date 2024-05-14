@@ -25,7 +25,7 @@ if(isset($_GET['del']))
 	<meta name="description" content="">
 	<meta name="author" content="">
 	<meta name="theme-color" content="#3e454c">
-	<title>Manage Courses</title>
+	<title>Manage Events</title>
 	<link rel="stylesheet" href="css/font-awesome.min.css">
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/dataTables.bootstrap.min.css">
@@ -45,30 +45,21 @@ if(isset($_GET['del']))
 			<div class="container-fluid">
 				<div class="row">
 					<div class="col-md-12">
-						<h2 class="page-title" style="margin-top:4%">Manage Course</h2>
+						<h2 class="page-title" style="margin-top:4%">Manage Event</h2>
 						<div class="panel panel-default">
-							<div class="panel-heading">All Courses Details</div>
+							<div class="panel-heading">All Events Details</div>
 							<div class="panel-body">
 								<table id="zctb" class="display table table-striped table-bordered table-hover" cellspacing="0" width="100%">
 									<thead>
 										<tr>
 											<th>Sno.</th>
-											<th>Course Code</th>
-											<th>Course Name(Short)</th>
-											<th>Course Name(Full)</th>
+											<th>Event Code</th>
+											<th>Event Name(Short)</th>
+											<th>Event Name(Full)</th>
 											<th>Reg Date </th>
 											<th>Action</th>
 										</tr>
 									</thead>
-									<tfoot>
-										<tr>
-											<th>Sl No</th>
-											<th>Course Code</th>
-											<th>Course Name(Short)</th>
-											<th>Course Name(Full)</th>
-											<th>Regd Date</th>
-											<th>Action</th>										</tr>
-									</tfoot>
 									<tbody>
 <?php	
 $aid=$_SESSION['id'];
