@@ -18,8 +18,8 @@
 				</li>
 					<li><a href="#"><i class="fa fa-desktop"></i> Feeback</a>
 					<ul>
-						<li><a href="create-room.php">Add a Feeback</a></li>
-						<li><a href="manage-rooms.php">Manage Feebacks</a></li>
+						<li><a href="add-feedback.php">Add a Feeback</a></li>
+						<li><a href="manage-feeback.php">Manage Feebacks</a></li>
 					</ul>
 				</li>
 
