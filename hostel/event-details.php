@@ -5,7 +5,31 @@
     check_login();
     //TODO : event name and the user name for database
 ?>
+<?php
+$aid = $_SESSION['id'];
 
+// Query to fetch user details and event names
+$ret_user = "SELECT firstName, lastName FROM userregistration WHERE id=?";
+$stmt_user = $mysqli->prepare($ret_user);
+$stmt_user->bind_param('i', $aid);
+$stmt_user->execute();
+$res_user = $stmt_user->get_result();
+$user = $res_user->fetch_object();
+$firstName = $user->firstName;
+$lastName = $user->lastName;
+
+$ret_event = "SELECT course_sn FROM courses";
+$stmt_event = $mysqli->prepare($ret_event);
+$stmt_event->execute();
+$res_event = $stmt_event->get_result();
+
+// Display the user's name and event names
+while ($event = $res_event->fetch_object()) {
+    $eventName = $event->course_sn;
+    echo "<h1>Event: $eventName 
+    User: $firstName $lastName</h1>";
+}
+?>
 <!doctype html>
 <html lang="en" class="no-js">
 
@@ -23,7 +47,7 @@
     <link rel="stylesheet" href="css/style.css">
     <style>
         .enroll-btn.enrolled {
-            background-color: green;
+            background-color: red;
             color:white;
         }
     </style>

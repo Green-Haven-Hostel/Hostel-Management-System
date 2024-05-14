@@ -42,40 +42,38 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <?php
-                                        // Start session
-                                        session_start();
+                            <?php
+// Start session
+session_start();
 
-                                        // Include necessary files
-                                        include('includes/config.php');
-                                        include('includes/checklogin.php');
+// Include necessary files
+include('includes/config.php');
+include('includes/checklogin.php');
 
-                                        // Check login status
-                                        check_login();
+// Check login status
+check_login();
 
-                                        // Get user ID from session
-                                        $aid = $_SESSION['id'];
+// Query to fetch all data from enrollments table
+$ret = "SELECT id,username, events FROM enrollments";
+$stmt = $mysqli->prepare($ret);
+$stmt->execute();
+$cnt=1;
+$res = $stmt->get_result();
 
-                                        // Query to fetch user details
-                                        $ret = "SELECT firstName, lastName FROM userregistration WHERE id=?";
-                                        $stmt = $mysqli->prepare($ret);
-                                        $stmt->bind_param('i', $aid);
-                                        $stmt->execute();
-                                        $res = $stmt->get_result();
+// Display all rows
+while ($row = $res->fetch_object()) {
+    $username = $row->username;
+    $event = $row->events;
 
-                                        // Fetch first name and last name
-                                        while ($row = $res->fetch_object()) {
-                                            $firstName = $row->firstName;
-                                            $lastName = $row->lastName;
-                                        }
-
-                                        // Display first name and last name
-                                        echo "<tr>";
-                                        echo "<td>1</td>"; 
-                                        echo "<td>$firstName $lastName</td>"; 
-                                        echo "<td>Event Name</td>"; 
-                                        echo "</tr>";
-                                        ?>
+    // Display each row
+    echo "<tr>";
+    echo "<td>$cnt</td>"; 
+    echo "<td>$username</td>"; 
+    echo "<td>$event</td>"; 
+    echo "</tr>";
+    $cnt +=1;
+}
+?>
                                     </tbody>
                                 </table>
 
