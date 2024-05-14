@@ -1,5 +1,8 @@
 <?php
+// Start session
 session_start();
+
+// Include necessary files
 include('includes/config.php');
 include('includes/checklogin.php');
 check_login();
@@ -8,7 +11,22 @@ check_login();
 if (isset($_POST['submit'])) {
     $feedbackNo = $_POST['fno'];
     $description = $_POST['description'];
-    
+    $username = ''; // Initialize the username variable
+
+    // Fetch the username from the enrollments table
+    $ret = "SELECT username FROM enrollments LIMIT 1"; // Adjust the query as needed
+    $stmt = $mysqli->prepare($ret);
+    $stmt->execute();
+    $res = $stmt->get_result();
+
+    if ($res->num_rows > 0) {
+        $row = $res->fetch_object();
+        $username = $row->username;
+    } else {
+        echo "<script>alert('No usernames found in enrollments');</script>";
+        exit();
+    }
+
     // Check if feedback already exists
     $sql = "SELECT feedback_id FROM feedback WHERE feedback_id=?";
     $stmt1 = $mysqli->prepare($sql);
@@ -21,34 +39,36 @@ if (isset($_POST['submit'])) {
         echo "<script>alert('Feedback already exists');</script>";
     } else {
         // Insert feedback into the database
-        $query = "INSERT INTO feedback (feedback_id, feedback) VALUES (?, ?)";
+        $query = "INSERT INTO feedback (feedback_id, username, feedback) VALUES (?, ?, ?)";
         $stmt = $mysqli->prepare($query);
-        $stmt->bind_param('is', $feedbackNo, $description);
+        $stmt->bind_param('iss', $feedbackNo, $username, $description);
         $stmt->execute();
         echo "<script>alert('Feedback has been added successfully');</script>";
     }
 }
 ?>
+
 <!doctype html>
 <html lang="en" class="no-js">
 <head>
 <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <meta name="theme-color" content="#3e454c">
-    <title>Create Feedback</title>
-    <link rel="stylesheet" href="css/font-awesome.min.css">
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/dataTables.bootstrap.min.css">
-    <link rel="stylesheet" href="css/bootstrap-social.css">
-    <link rel="stylesheet" href="css/bootstrap-select.css">
-    <link rel="stylesheet" href="css/fileinput.min.css">
-    <link rel="stylesheet" href="css/awesome-bootstrap-checkbox.css">
-    <link rel="stylesheet" href="css/style.css">
-    <script type="text/javascript" src="js/jquery-1.11.3-jquery.min.js"></script>
-    <script type="text/javascript" src="js/validation.min.js"></script></head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+<meta name="theme-color" content="#3e454c">
+<title>Create Feedback</title>
+<link rel="stylesheet" href="css/font-awesome.min.css">
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<link rel="stylesheet" href="css/dataTables.bootstrap.min.css">
+<link rel="stylesheet" href="css/bootstrap-social.css">
+<link rel="stylesheet" href="css/bootstrap-select.css">
+<link rel="stylesheet" href="css/fileinput.min.css">
+<link rel="stylesheet" href="css/awesome-bootstrap-checkbox.css">
+<link rel="stylesheet" href="css/style.css">
+<script type="text/javascript" src="js/jquery-1.11.3-jquery.min.js"></script>
+<script type="text/javascript" src="js/validation.min.js"></script>
+</head>
 <body>
     <?php include('includes/header.php'); ?>
     <div class="ts-main-content">
@@ -100,5 +120,6 @@ if (isset($_POST['submit'])) {
     <script src="js/Chart.min.js"></script>
     <script src="js/fileinput.js"></script>
     <script src="js/chartData.js"></script>
-    <script src="js/main.js"></script></body>
+    <script src="js/main.js"></script>
+</body>
 </html>
