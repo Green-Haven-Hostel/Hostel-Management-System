@@ -20,6 +20,7 @@
 					<ul>
 						<li><a href="add-feedback.php">Add a Feeback</a></li>
 						<li><a href="manage-feeback.php">Manage Feebacks</a></li>
+						<li><a href="view-feebacks.php">View Feebacks</a></li>
 					</ul>
 				</li>
 

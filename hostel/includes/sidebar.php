@@ -9,6 +9,7 @@
 <li><a href="book-hostel.php"><i class="fa fa-file-o"></i>Book Hostel</a></li>
 <li><a href="room-details.php"><i class="fa fa-file-o"></i>Room Details</a></li>
 <li><a href="event-details.php"><i class="fa fa-file-o"></i>Event Details</a></li>
+<li><a href="feeback-form.php"><i class="fa fa-file-o"></i>Feeback Form</a></li>
 <li><a href="my-profile.php"><i class="fa fa-user"></i> My Profile</a></li>
 <li><a href="change-password.php"><i class="fa fa-files-o"></i>Change Password</a></li>
 <li><a href="access-log.php"><i class="fa fa-file-o"></i>Access log</a></li>
