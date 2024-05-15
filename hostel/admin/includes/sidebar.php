@@ -15,6 +15,14 @@
 						<li><a href="manage-rooms.php">Manage Rooms</a></li>
 					</ul>
 				</li>
+				</li>
+					<li><a href="#"><i class="fa fa-desktop"></i> Feeback</a>
+					<ul>
+						<li><a href="add-feedback.php">Add a Feeback</a></li>
+						<li><a href="manage-feeback.php">Manage Feebacks</a></li>
+						<li><a href="view-feebacks.php">View Feebacks</a></li>
+					</ul>
+				</li>
 
 				<li><a href="registration.php"><i class="fa fa-user"></i>Student Registration</a></li>
 				<li><a href="enrollments.php"><i class="fa fa-user"></i>Enrollments</a></li>

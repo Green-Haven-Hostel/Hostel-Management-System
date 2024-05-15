@@ -319,4 +319,41 @@ li {
 	position: absolute;
 	height: 100%;
 	width: 100%;
+}.feedback-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.feedback-card {
+    flex: 1 1 calc(33.333% - 20px);
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    background-color: #fff;
+    margin-bottom: 20px;
+}
+
+.feedback-card .card-body {
+    padding: 15px;
+}
+
+.feedback-card .card-title {
+    margin-bottom: 15px;
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+
+.feedback-card .card-text {
+    margin-bottom: 10px;
+    font-size: 1rem;
+}
+
+.feedback-card .form-group {
+    margin-top: 10px;
+}
+
+.feedback-card .form-control {
+    width: 100%;
 }
