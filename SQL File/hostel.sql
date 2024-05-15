@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 15, 2024 at 06:44 AM
--- Server version: 10.4.28-MariaDB
--- PHP Version: 8.2.4
+-- Generation Time: May 15, 2024 at 06:07 AM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.0.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -41,13 +41,14 @@ CREATE TABLE `admin` (
 --
 
 INSERT INTO `admin` (`id`, `username`, `email`, `password`, `reg_date`, `updation_date`) VALUES
-(1, 'admin', 'admin@gmail.com', 'Test@1234', '2024-01-31 20:31:45', '2024-02-10');
+(1, 'admin', 'admin@gmail.com', 'Test@1234', '2024-01-31 20:31:45', '2024-05-15');
 
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `adminlog`
 --
+
 CREATE TABLE `adminlog` (
   `id` int(11) NOT NULL,
   `adminid` int(11) NOT NULL,
@@ -74,16 +75,54 @@ CREATE TABLE `courses` (
 --
 
 INSERT INTO `courses` (`id`, `course_code`, `course_sn`, `course_fn`, `posting_date`) VALUES
-(1, 'B10992', 'B.Tech', 'Bachelor  of Technology', '2024-02-14 19:31:42'),
-(2, 'BCOM1453', 'B.Com', 'Bachelor Of commerce ', '2024-02-14 19:31:42'),
-(3, 'BSC12', 'BSC', 'Bachelor  of Science', '2024-02-14 19:31:42'),
-(4, 'BC36356', 'BCA', 'Bachelor Of Computer Application', '2024-02-14 19:31:42'),
-(5, 'MCA565', 'MCA', 'Master of Computer Application', '2024-02-14 19:31:42'),
-(6, 'MBA75', 'MBA', 'Master of Business Administration', '2024-02-14 19:31:42'),
-(7, 'BE765', 'BE', 'Bachelor of Engineering', '2024-02-14 19:31:42');
+(13, '5050', 'Computer software', 'where ? Kujan home', '2024-05-14 10:50:56'),
+(15, '6000', 'Computer Science class ', 'computer ko class', '2024-05-14 12:38:22'),
+(16, 's', 's', 's', '2024-05-14 18:06:39'),
+(17, '411', 'csssssss', 'csc', '2024-05-14 23:47:34');
 
 -- --------------------------------------------------------
 
+--
+-- Table structure for table `enrollments`
+--
+
+CREATE TABLE `enrollments` (
+  `id` int(11) NOT NULL,
+  `username` varchar(50) DEFAULT NULL,
+  `events` varchar(50) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `enrollments`
+--
+
+INSERT INTO `enrollments` (`id`, `username`, `events`) VALUES
+(59, 'karan sunar', 's'),
+(60, ' ', 'Computer software'),
+(61, ' ', 'Computer software');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `feedback`
+--
+
+CREATE TABLE `feedback` (
+  `feedback_id` int(11) NOT NULL,
+  `username` varchar(50) NOT NULL,
+  `feedback` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `feedback`
+--
+
+INSERT INTO `feedback` (`feedback_id`, `username`, `feedback`) VALUES
+(85858, 'karan sunar', 'Do you like the hostel rules ? ');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `registration`
 --
 
@@ -146,11 +185,8 @@ CREATE TABLE `rooms` (
 --
 
 INSERT INTO `rooms` (`id`, `seater`, `room_no`, `fees`, `posting_date`) VALUES
-(1, 5, 100, 8000, '2024-02-19 22:45:43'),
-(2, 2, 201, 6000, '2024-02-19 22:45:43'),
-(3, 2, 200, 6000, '2024-02-19 22:45:43'),
-(4, 3, 112, 4000, '2024-02-19 22:45:43'),
-(5, 5, 132, 2000, '2024-02-19 22:45:43');
+(6, 2, 200, 10000, '2024-05-15 00:28:51'),
+(7, 1, 365484854, 0, '2024-05-15 00:29:43');
 
 -- --------------------------------------------------------
 
@@ -208,6 +244,30 @@ INSERT INTO `states` (`id`, `State`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `useranswer`
+--
+
+CREATE TABLE `useranswer` (
+  `id` int(11) NOT NULL,
+  `answer` text NOT NULL,
+  `username` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `useranswer`
+--
+
+INSERT INTO `useranswer` (`id`, `answer`, `username`) VALUES
+(12, 'okay why no ', 'meronamekaranho@gmail.com'),
+(13, 'Ok that will be fun ! I am 100% in it.', 'meronamekaranho@gmail.com'),
+(14, 'hello ', 'meronamekaranho@gmail.com'),
+(15, 'xxxxxxxxxxx', 'meronamekaranho@gmail.com'),
+(16, 'buievebvbeivb', 'meronamekaranho@gmail.com'),
+(17, 'yes i like it \r\n', 'meronamekaranho@gmail.com');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `userlog`
 --
 
@@ -227,7 +287,11 @@ CREATE TABLE `userlog` (
 
 INSERT INTO `userlog` (`id`, `userId`, `userEmail`, `userIp`, `city`, `country`, `loginTime`) VALUES
 (1, 4, 'hohn@gmail.com', 0x3a3a31, '', '', '2024-03-14 05:15:31'),
-(2, 4, 'hohn@gmail.com', 0x3a3a31, '', '', '2024-03-14 06:09:44');
+(2, 4, 'hohn@gmail.com', 0x3a3a31, '', '', '2024-03-14 06:09:44'),
+(3, 5, 'kunjan123@gmail.com', 0x3a3a31, '', '', '2024-05-13 19:02:25'),
+(4, 3, 'test@gmail.com', 0x3a3a31, '', '', '2024-05-14 06:56:40'),
+(5, 5, 'kunjan123@gmail.com', 0x3a3a31, '', '', '2024-05-14 06:59:58'),
+(6, 6, 'meronamekaranho@gmail.com', 0x3a3a31, '', '', '2024-05-14 23:58:30');
 
 -- --------------------------------------------------------
 
@@ -255,8 +319,8 @@ CREATE TABLE `userregistration` (
 --
 
 INSERT INTO `userregistration` (`id`, `regNo`, `firstName`, `middleName`, `lastName`, `gender`, `contactNo`, `email`, `password`, `regDate`, `updationDate`, `passUdateDate`) VALUES
-(3, '10806121', 'Anuj', '', 'kumar', 'male', 1234567890, 'test@gmail.com', 'Test@123', '2024-03-01 14:56:18', NULL, NULL),
-(4, '108061233', 'John', '', 'Doe', 'male', 1425362514, 'hohn@gmail.com', 'Test@123', '2024-03-14 05:15:01', NULL, NULL);
+(5, '40001', 'kunjan', '', 'sharma', 'male', 9800000000, 'kunjan123@gmail.com', 'KK009@kushal', '2024-05-13 19:02:15', '14-05-2024 06:10:40', NULL),
+(6, '90909090', 'karan', '', 'sunar', 'male', 9800000000, 'meronamekaranho@gmail.com', 'KK009@kushal', '2024-05-14 23:58:07', NULL, NULL);
 
 --
 -- Indexes for dumped tables
@@ -275,6 +339,18 @@ ALTER TABLE `courses`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `enrollments`
+--
+ALTER TABLE `enrollments`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `feedback`
+--
+ALTER TABLE `feedback`
+  ADD PRIMARY KEY (`feedback_id`);
+
+--
 -- Indexes for table `registration`
 --
 ALTER TABLE `registration`
@@ -291,6 +367,12 @@ ALTER TABLE `rooms`
 -- Indexes for table `states`
 --
 ALTER TABLE `states`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `useranswer`
+--
+ALTER TABLE `useranswer`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -320,7 +402,19 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT for table `courses`
 --
 ALTER TABLE `courses`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+
+--
+-- AUTO_INCREMENT for table `enrollments`
+--
+ALTER TABLE `enrollments`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
+
+--
+-- AUTO_INCREMENT for table `feedback`
+--
+ALTER TABLE `feedback`
+  MODIFY `feedback_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2147483648;
 
 --
 -- AUTO_INCREMENT for table `registration`
@@ -332,7 +426,7 @@ ALTER TABLE `registration`
 -- AUTO_INCREMENT for table `rooms`
 --
 ALTER TABLE `rooms`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `states`
@@ -341,16 +435,22 @@ ALTER TABLE `states`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
+-- AUTO_INCREMENT for table `useranswer`
+--
+ALTER TABLE `useranswer`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+
+--
 -- AUTO_INCREMENT for table `userlog`
 --
 ALTER TABLE `userlog`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `userregistration`
 --
 ALTER TABLE `userregistration`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
