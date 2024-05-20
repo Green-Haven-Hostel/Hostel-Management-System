@@ -38,7 +38,7 @@ check_login();
                     <div class="col-md-12">
 						<br>
                         <h2 class="page-title" style="margin-top:4%">Dashboard</h2>
-                        <div class="row">
+                        <div class="row">       
                             <div class="col-md-6">
                                 <div id="pieChartContainer" style="height: 370px; width: 100%;"></div>
                             </div>

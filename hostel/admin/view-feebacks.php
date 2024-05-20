@@ -54,7 +54,7 @@
                                         check_login();
 
                                         // Query to fetch user answers from the "useranswer" table
-                                        $username = "meronamekaranho@gmail.com"; // The username whose answers you want to fetch
+                                        $username = "karan@coder.com"; // The username whose answers you want to fetch
                                         $ret = "SELECT id, username, answer FROM useranswer WHERE username = ?";
                                         $stmt = $mysqli->prepare($ret);
                                         $stmt->bind_param("s", $username);
